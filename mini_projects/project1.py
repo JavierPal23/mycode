@@ -3,14 +3,18 @@
     What 'Drum and Bass' DJ you'll like based on your favorite color."""
 
 print("What is your name? ")
+answer= ""
 user_name = input()
 
-print("Hello", user_name , "what is your favorite color? ")
-answer = input()
-answer = answer.lower()
+
+while answer not in ["yellow", "green", "blue", "orange", "black", "red"]:
+    print("Hello", user_name , "what is your favorite color? ")
+    answer = input()
+    answer = answer.lower()
 
 
 if answer == "yellow":
+
     print("You picked", answer , "you'll more than likely like Subtronics")
 
 if answer == "green":
@@ -27,9 +31,5 @@ if answer == "black":
 if answer == "red":
     print("You picked", answer , "you'll more than likely like Sullivan King")
 
-
-while answer not in ["yellow", "green", "blue", "orange", "black", "red"]:
-    print("Try another color")
-    break
 else:
-   print("You dont know who that is? Go listen to your mainstream music.")
+   print("You should check them out.")
