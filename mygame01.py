@@ -2,7 +2,7 @@
 """ TLG | Javier Palacios
     Editing RPG, mini project #2"""
 
-counter = 0
+counter = 0                                             ### CHANGE 2 ADDING COUNTER
 
 # Replace RPG starter project with this code when new instructions are live
 
@@ -32,6 +32,7 @@ inventory = []
 
 #a dictionary linking a room to other rooms
 ## A dictionary linking a room to other rooms
+
 rooms = {
 
             'Hall' : {
@@ -52,23 +53,27 @@ rooms = {
             'Garden' : {
                   'north' : 'Dining Room'
                 },
-            'Man Cave' : {
+            'Man Cave' : {                                  ### CHANGE 1 ADDING ADDITIONAL ROOM
                   'east' : 'Hall',
-                  'item' : 'flame thrower'
+                  'item' : 'flame thrower',                 ### CHANGE 4 ADDING ADDITIONAL ITEM
                 },
-         }
+
+            }
+
 
 #start the player in the Hall
 currentRoom = 'Hall'
+
 
 showInstructions()
 
 #loop forever
 while True:
-  counter += 1
+  counter += 1                                                ### CHANGE 2 ADDING COUNTER
   
-  showStatus()
-  print("Moves made:", counter)
+  showStatus()                                                ### CHANGE 2 ADDING COUNTER
+  print("Moves made:", counter)                               ### CHANGE 2 ADDING COUNTER
+  
 
   #get the player's next 'move'
   #.split() breaks it up into an list array
@@ -92,6 +97,11 @@ while True:
     #there is no door (link) to the new roiom
     else:
         print('You can\'t go that way!')
+
+  if move[0] == 'teleport' :                                  ### CHANGE 3  ###IMPLEMENTED TELEPORT
+      if move[1].capitalize() in rooms:
+          currentRoom = move[1].capitalize()
+
 
   #if they type 'get' first
   if move[0] == 'get' :
