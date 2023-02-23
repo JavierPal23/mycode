@@ -28,7 +28,6 @@ Commands:
   hike [direction]
   get [item]
   build [object]
-  tear down [object]
 ''')
 
 def showStatus():
@@ -106,36 +105,78 @@ while True:
   while move == '':
     move = input('>')
 
-  # split allows an items to have a space on them
-  # get golden key is returned ["get", "golden key"]          
+  
+  # split allows an items to have a space on them          
   move = move.lower().split(" ", 1)
 
-  #if they type 'go' first
-  if move[0] == 'go':
-    #check that they are allowed wherever they want to go
-    if move[1] in rooms[currentRoom]:
-      #set the current room to the new room
-      currentRoom = rooms[currentRoom][move[1]]
-    #there is no door (link) to the new room
-    else:
-        print('You can\'t go that way!')
+  
 
-  #if they type 'get' first
+
+
+  #if they type 'hike' first
+  if move[0] == 'hike':
+
+    #check that they are allowed wherever they want to go
+    if move[1] in sites[currentSite]:
+
+      #set the current site to the new site
+      currentSite = sites[currentSite][move[1]]
+    #there is no link to the new site
+    else:
+        print('You can\'t hike that way!')
+
+
+
+
+
+#if they type 'get' first
   if move[0] == 'get' :
-    #if the room contains an item, and the item is the one they want to get
-    if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-      #add the item to their inventory
+
+      #if the site contains an item, and the item is the one they want to get
+    if "item" in sites[currentSite] and move[1] in sites[currentSite]['item']:
+
+
+    #if the site contains an object, and the object is the one they want to get
+    if "object" in sites[currentSite] and move[1] in sites[currentSite]['object']:
+
+      #add the item/object to their inventory
       inventory += [move[1]]
+
       #display a helpful message
       print(move[1] + ' got!')
-      #delete the item from the room
-      del rooms[currentRoom]['item']
-    #otherwise, if the item isn't there to get
+
+      #delete the item from the site
+      del sites[currentSite]['item']
+
+      #delete the object from the site
+      del sites[currentSite]['object']
+
+    #otherwise, if the item/object isn't there to get
     else:
       #tell them they can't get it
       print('Can\'t get ' + move[1] + '!')
 
-  ## Define how a player can win
+
+
+
+
+#if they type 'build'
+  if move[0] == 'build' :
+
+      #if object is in inventory then camper can use build command
+   if "object" in inventory:
+
+     #display message that object was built
+     print(move[1] + ' built!')
+
+     #remove object from their inventory
+     inventory -= [move[1]]
+
+ 
+
+
+
+## Define how a player can win
   if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
     print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
     break
