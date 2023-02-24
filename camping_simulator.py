@@ -2,6 +2,7 @@
 """ TLG | Javier Palacios
     Camping Simulator"""
 
+import rock_paper_scissors
 
 def showInstructions():
 
@@ -25,6 +26,7 @@ Map:
           -----------    -----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Commands:
+
   hike [direction]
   get [item]
   build [object]
@@ -134,28 +136,27 @@ while True:
   if move[0] == 'get' :
 
       #if the site contains an item, and the item is the one they want to get
-    if "item" in sites[currentSite] and move[1] in sites[currentSite]['item']:
+      if "item" in sites[currentSite] and move[1] in sites[currentSite]['item']:
+        inventory += [move[1]]
+        print(move[1] + ' got!')
+        del sites[currentSite]['item']
 
+      #if the site contains an object, and the object is the one they want to get
+      elif "object" in sites[currentSite] and move[1] in sites[currentSite]['object']:
 
-    #if the site contains an object, and the object is the one they want to get
-      if "object" in sites[currentSite] and move[1] in sites[currentSite]['object']:
-
-      #add the item/object to their inventory
+        #add the item/object to their inventory
         inventory += [move[1]]
 
-      #display a helpful message
-      print(move[1] + ' got!')
+        #display a helpful message
+        print(move[1] + ' got!')
 
-      #delete the item from the site
-      del sites[currentSite]['item']
+        #delete the object from the site
+        del sites[currentSite]['object']
 
-      #delete the object from the site
-      del sites[currentSite]['object']
-
-    #otherwise, if the item/object isn't there to get
-    else:
-      #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
+        #otherwise, if the item/object isn't there to get
+      else:
+        #tell them they can't get it
+        print('Can\'t get ' + move[1] + '!')
 
 
 
@@ -165,13 +166,13 @@ while True:
   if move[0] == 'build' :
 
       #if object is in inventory then camper can use build command
-   if "object" in inventory :
+   if move[1] in inventory :
 
      #display message that object was built
      print(move[1] + ' built!')
 
      #remove object from their inventory
-     inventory -= [move[1]]
+     ##inventory -= [move[1]]
 
  
 
@@ -179,56 +180,21 @@ while True:
 
 ## If camper shoots the mountain lion and fishes he wins the game
   if currentSite == 'Hill-Top' and 'gun' in inventory :
-    print('You shot the mountain lion!')
+    print('WATCH OUT!! a mountain lion, you shot at the sky and scared it AWAY!')
 
   if currentSite == 'Lake' and 'fishing pole' in inventory :
     print('You caught dinner!')
-    break
+    ##break
 
   ## If camper enters the cave with bigfoot
   elif 'item' in sites[currentSite] and 'bigfoot' in sites[currentSite]['item']:
     print('Play bigfoot Rock, Paper, Scissors to not become his dinner! ')
-    
-####ROCK PAPER SCISSORS CODE####
-#Import random module 
-import random 
- 
-#Create a list of play options 
-play = ["Rock", "Paper", "Scissors"]
 
+    ##import the code for rock paper scissors game
+    if rock_paper_scissors.game() == False:
+        print("You lose and the bigfoot eats you!")
+        break
+    else:
+        print("The bigfoot begrudgingly lets you go.")
 
-
-#Assign a random play to the system 
-computer = play[random.randint(0,2)] 
- 
-#Set the player to False 
-player = False
-
-
-
-while player == False: 
-#Set the player to True 
-    player = input("Rock, Paper, Scissors?") 
-    if player == computer: 
-        print("Tie!") 
-    elif player == "Rock": 
-        if computer == "Paper": 
-            print("You lose!", computer, "covers", player) 
-        else: 
-            print("You win!", player, "smashes", computer) 
-    elif player == "Paper": 
-        if computer == "Scissors": 
-            print("You lose!", computer, "cuts", player) 
-        else: 
-            print("You win!", player, "covers", computer) 
-    elif player == "Scissors": 
-        if computer == "Rock": 
-            print("You lose...", computer, "smashes", player) 
-        else: 
-            print("You win!", player, "cuts", computer) 
-    else: 
-        print("That's not a valid play. Check the spelling!") 
-    #Player was set to True, but we want it to be False so the loop continues 
-    player = False 
-    computer = play[random.randint(0,2)]
-    break
+    # break
