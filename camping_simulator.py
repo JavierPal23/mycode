@@ -37,16 +37,16 @@ def showStatus():
   print('You are at the ' + currentSite)
 
   #print the current inventory
-  print('Inventory : ' + str(inventory))
+  print('inventory : ' + str(inventory))
 
   #print an item if there is one
   if "item" in sites[currentSite]:
-    print('You see a ' + sites[currentSite]['item'])
+    print('You see a ', sites[currentSite]['item'])
   print("---------------------------")
 
   #print an object if there is one
   if "object" in sites[currentSite]:
-    print('You see a ' + sites[currentSite]['object'])
+    print('You see a ', sites[currentSite]['object'])
   print("---------------------------")
 
 
@@ -58,7 +58,7 @@ sites = {
 
             'Car' : {
                   'west'   : 'Tree-Line',
-                  'item'   : ['gun','lighter','food'],
+                  'item'   : 'gun',
                   'object' : 'tent',
                 },
             'Tree-Line' : {
@@ -80,6 +80,7 @@ sites = {
                },
             'Cave' : {
                   'west' : 'Camp-Site',
+                  'item' : 'bigfoot',
                },
             'Hill-Top': {
                   'south': 'Camp-Site',
@@ -95,7 +96,7 @@ showInstructions()
 #loop forever
 while True:
 
-  showStatus()
+  showStatus()  
 
   #get the player's next 'move'
   #.split() breaks it up into an list array
@@ -137,10 +138,10 @@ while True:
 
 
     #if the site contains an object, and the object is the one they want to get
-    if "object" in sites[currentSite] and move[1] in sites[currentSite]['object']:
+      if "object" in sites[currentSite] and move[1] in sites[currentSite]['object']:
 
       #add the item/object to their inventory
-      inventory += [move[1]]
+        inventory += [move[1]]
 
       #display a helpful message
       print(move[1] + ' got!')
@@ -164,7 +165,7 @@ while True:
   if move[0] == 'build' :
 
       #if object is in inventory then camper can use build command
-   if "object" in inventory:
+   if "object" in inventory :
 
      #display message that object was built
      print(move[1] + ' built!')
@@ -176,12 +177,20 @@ while True:
 
 
 
-## Define how a player can win
-  if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-    print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
+## If camper shoots the mountain lion and fishes he wins the game
+  if currentSite == 'Hill-Top' and 'gun' in inventory :
+    print('You shot the mountain lion!')
+
+  if currentSite == 'Lake' and 'fishing pole' in inventory :
+    print('You caught dinner!')
     break
 
-  ## If a player enters a room with a monster
-  elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
+  ## If camper enters the cave with bigfoot
+  elif 'item' in sites[currentSite] and 'bigfoot' in sites[currentSite]['item']:
+    print('Play bigfoot Rock, Paper, Scissors to not become his dinner! ')
+    
+
+
+
+
     break
