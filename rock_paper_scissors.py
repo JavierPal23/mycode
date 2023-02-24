@@ -6,15 +6,11 @@ play = ["Rock", "Paper", "Scissors"]
 
 
 
-
 #Assign a random play to the system 
 computer = play[random.randint(0,2)] 
  
 #Set the player to False 
 player = False
-
-
-
 
 
 
